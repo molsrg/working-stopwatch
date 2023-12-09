@@ -1,78 +1,80 @@
 <template>
-    <v-main class="container">
-        <h1 class="timer" id="timer">
-            {{ currentTime.hours }}:{{ currentTime.minutes }}:{{
-                currentTime.seconds
-            }}
-        </h1>
+    <h1 class="timer" id="timer">
+        {{ currentTime.hours }}:{{ currentTime.minutes }}:{{
+            currentTime.seconds
+        }}
+    </h1>
 
-        <div>
-            <v-btn
-                v-if="!isTimeRunning"
-                variant="tonal"
-                color="blue"
-                @click="startTimer()"
-            >
-                Начать работу
-            </v-btn>
+    <div class="btn__container">
+        <v-btn
+            v-if="!isTimeRunning"
+            variant="tonal"
+            color="blue"
+            @click="startTimer()"
+        >
+            Начать работу
+        </v-btn>
 
-            <v-btn
-                v-if="isTimeRunning && !isOnBreak"
-                variant="tonal"
-                color="orange"
-                @click="startBreak()"
-            >
-                Сделать перерыв
-            </v-btn>
+        <v-btn
+            v-if="isTimeRunning && !isOnBreak"
+            variant="tonal"
+            color="orange"
+            @click="startBreak()"
+        >
+            Сделать перерыв
+        </v-btn>
 
-            <v-btn
-                v-if="isOnBreak"
-                variant="tonal"
-                color="green"
-                @click="resumeWork()"
-            >
-                Вернуться к работе
-            </v-btn>
-            <v-dialog width="500">
-                <template v-slot:activator="{ props }">
-                    <v-btn
-                        v-bind="props"
-                        text="Завершить работу"
-                        v-if="isTimeRunning"
-                        variant="tonal"
-                        color="red"
-                        @click="stopTimer()"
-                    >
-                    </v-btn>
-                </template>
+        <v-btn
+            v-if="isOnBreak"
+            variant="tonal"
+            color="green"
+            @click="resumeWork()"
+        >
+            Вернуться к работе
+        </v-btn>
 
-                <template v-slot:default="{ isActive }">
-                    <v-card title="Dialog">
-                        <v-card-text>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliqua.
-                        </v-card-text>
+        <v-dialog width="500">
+            <template v-slot:activator="{ props }">
+                <v-btn
+                    v-bind="props"
+                    text="Завершить работу"
+                    v-if="isTimeRunning"
+                    variant="tonal"
+                    color="red"
+                    @click="stopTimer()"
+                >
+                </v-btn>
+            </template>
 
-                        <v-card-actions>
-                            <v-spacer></v-spacer>
+            <template v-slot:default="{ isActive }">
+                <v-card title="Dialog">
+                    <v-card-text>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua.
+                    </v-card-text>
 
-                            <v-btn
-                                text="завершить Работу"
-                                @click="isActive.value = false"
-                            ></v-btn>
-                        </v-card-actions>
-                    </v-card>
-                </template>
-            </v-dialog>
-        </div>
-        <WorkDay></WorkDay>
-    </v-main>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+
+                        <v-btn
+                            text="завершить Работу"
+                            @click="isActive.value = false"
+                        ></v-btn>
+                    </v-card-actions>
+                </v-card>
+            </template>
+        </v-dialog>
+    </div>
 </template>
 
 <script setup>
 import { ref, onUnmounted } from "vue";
-import WorkDay from "@/components/WorkDay.vue";
+import { useCounterStore } from "@/store/index.js";
+
+const store = useCounterStore();
+store.randomizeCounter()
+
 
 const isTimeRunning = ref(localStorage.getItem("TIMER_RUN") === "true");
 const isOnBreak = ref(false);
@@ -84,26 +86,31 @@ const currentTime = ref({
     seconds: "00",
 });
 
-const Session = ref({
+// const Session = ref({
+//         date: new Date().toLocaleDateString(),
+//         startTime: localStorage.getItem('SESSION_START'),
+//         totalTime: null,
+//         session: [{ time: null, minutes: 0 }],
+//         comments: "",
+// });
+
+let Session = ref({
     date: new Date().toLocaleDateString(),
-    startTime: null, 
-    totalTime: null, 
-    session: [
-        {time: null, minutes: 0}
-    ], 
-    comments: ''      
-    
-    
-})
+    startTime: localStorage.getItem("SESSION_START"),
+    totalTime: 0,
+    segments: [],
+    comments: "",
+});
 
 // Запускает таймер
 const startTimer = () => {
     isTimeRunning.value = true;
     const startTime = Date.now();
     localStorage.setItem("TIMER_START", startTime);
+    localStorage.setItem("SESSION_START", startTime);
+    localStorage.setItem("SEGMENT_START", startTime);
     localStorage.setItem("TIMER_RUN", true);
     console.log("Начинаю работу в", formatITime(startTime));
-    Session.value.startTime = formatITime(startTime)
 
     const timerStart = localStorage.getItem("TIMER_START");
     timerInterval = setInterval(() => {
@@ -113,6 +120,7 @@ const startTimer = () => {
     }, 1000);
 };
 
+// Обновление таймера
 const updateTimer = (time) => {
     const now = Date.now();
     const timeHasPassed = now - time;
@@ -130,44 +138,64 @@ const updateTimer = (time) => {
     };
 };
 
-
 // Начинаем перерыв
 const startBreak = () => {
     console.log("Перерыв начат в ", formatITime(Date.now()));
+
     localStorage.setItem("BREAK_START", Date.now());
     clearInterval(timerInterval);
     isOnBreak.value = true;
+
+    // Вычисляет длину сегмента
+    const sessionStart = parseInt(localStorage.getItem("SEGMENT_START"), 10);
+    const sessionDuration = Date.now() - sessionStart;
+
+    Session.value.segments.push({
+        totalTime: sessionDuration,
+        // breakTime: breakDuration,
+        segmentStart: sessionStart,
+        segmentEnd: Date.now(),
+    });
+
+    // Вычисление общей длительности всех сегментов
+    const totalSessionTime = Session.value.segments.reduce((total, segment) => {
+        return total + segment.totalTime;
+    }, 0);
+
+    // Обновление общей длительности сессии и начала сессии 
+    Session.value.totalTime = totalSessionTime;
+    Session.value.startTime = localStorage.getItem("SESSION_START");
+    console.log(Session.value);
+
+
+    store.updateSession(Session.value)
+
+    // localStorage.setItem("CURRENT_SESSION", JSON.stringify(Session.value));
 };
 
 // отдых после перерыва
 const resumeWork = () => {
     isOnBreak.value = false;
-    
     const breakStart = parseInt(localStorage.getItem("BREAK_START"), 10);
     const breakEndTime = Date.now();
+    localStorage.setItem("SEGMENT_START", breakEndTime);
     console.log("Возвращаюсь к работе в ", formatITime(breakEndTime));
 
-    const breakDuration = breakEndTime -  breakStart;
-    console.log("Длительность перерыва ", breakDuration / 1000, "сек");
+    // Вычисляет длительность перерыва до следующего сегмента
+    const breakDuration = breakEndTime - breakStart;
+    console.log("Длительность перерыва ", breakDuration, "мс");
 
+    // Обновляет общий счетчик времени
     const timerStart = parseInt(localStorage.getItem("TIMER_START"), 10);
-
-    const newTime = timerStart + breakDuration
-
-    console.log(timerStart, formatITime(timerStart))
-
-
-    console.log(newTime, formatITime(newTime))
-    localStorage.setItem("TIMER_START", newTime)
+    const newTime = timerStart + breakDuration;
+    localStorage.setItem("TIMER_START", newTime);
 
     timerInterval = setInterval(() => {
         if (timerStart) {
             updateTimer(parseInt(newTime, 10));
         }
     }, 1000);
-
 };
-
 
 const stopTimer = () => {
     console.log("Завершаю работу");
@@ -177,7 +205,7 @@ const stopTimer = () => {
     localStorage.removeItem("BREAK_START");
 };
 
-// Приведение формата времени к нужному виду 
+// Приведение формата времени к нужному виду
 const formatTime = (time) => {
     return time < 10 ? `0${time}` : time.toString();
 };
@@ -198,13 +226,8 @@ onUnmounted(() => {
 </script>
 
 <style>
-.container {
-    margin: 0 auto;
-    margin-top: 10vh;
-    padding: 0px 15px;
+.btn__container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     column-gap: 10px;
     row-gap: 10px;
 }
