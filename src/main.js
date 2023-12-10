@@ -18,7 +18,6 @@ import { registerPlugins } from '@/plugins'
 
 const pinia = createPinia()
 
-
 const localStorageLang = localStorage.getItem('language')
 const messages = Object.assign(languages)
 const i18n = createI18n({

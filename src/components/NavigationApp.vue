@@ -51,7 +51,7 @@ function toggleTheme() {
 
 const language = {
     Русский: "ru",
-    England: "en",
+    English: "en",
     Беларускі: "be"
 };
 

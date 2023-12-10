@@ -1,10 +1,18 @@
 {
-    "title": "Time to Work", 
+    "title": "Time to work",
     "buttons": {
-        "startTimer": "Get Started",
-        "breakTime": "Take a Break",
-        "resumeWork": "Continue Work",
-        "stopTimer": "Stop Working"
+        "startTimer": "Start work",
+        "breakTime": "Take a break",
+        "resumeWork": "Resume work",
+        "stopTimer": "Finish work",
+        "cancel": "Cancel"
+    },
+    "startDialog": {
+        "title": "Let's start a new session",
+        "inputTitleSession": "Enter session title"
+    },
+    "finishDialog": {
+        "title": "Well done, you've worked well today! Leave a short comment",
+        "inputTitleSession": "Leave a comment here"
     }
-
 }

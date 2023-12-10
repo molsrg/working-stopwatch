@@ -12,8 +12,10 @@ export const useCounterStore = defineStore("counter", {
             seconds: "00",
         },
 
+        openStartDialog: false,
         openDialog: false,
-        timerRun: false
+        timerRun: false, 
+        timerInterval: null
     }),
     getters: {
 
@@ -27,11 +29,17 @@ export const useCounterStore = defineStore("counter", {
         isOpenDialog(state) {
             return state.openDialog
         },
+        isOpenStartDialog(state) {
+            return state.openStartDialog
+        },
         isTimerRun(state) {
             return state.timerRun
         },
         getCurrentTime(state) {
             return state.currentTime
+        },
+        getTimerInterval(state) {
+            return state.timerInterval
         }
     },
 
@@ -68,11 +76,21 @@ export const useCounterStore = defineStore("counter", {
         updateOpenDialog() {
             this.openDialog = !this.openDialog
         }, 
+        
+        updateOpenStartDialog() {
+            this.openStartDialog = !this.openStartDialog
+        }, 
         updateTimerRun() {
             this.timerRun = !this.timerRun
         },
         updateCurrentTime(data){
             this.currentTime = data
+        }, 
+        updateTimerInterval(data){
+            this.timerInterval = data
+        }, 
+        clearIntervalTimer(){
+            clearInterval(this.timerInterval)
         }
     },
 });

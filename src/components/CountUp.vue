@@ -10,9 +10,9 @@
             v-if="!store.isTimerRun"
             variant="tonal"
             color="blue"
-            @click="startTimer()"
+            @click="startSession()"
         >
-        {{ $t("buttons.startTimer") }}
+            {{ $t("buttons.startTimer") }}
         </v-btn>
 
         <v-btn
@@ -21,7 +21,7 @@
             color="orange"
             @click="startBreak()"
         >
-        {{ $t("buttons.breakTime") }}
+            {{ $t("buttons.breakTime") }}
         </v-btn>
 
         <v-btn
@@ -30,7 +30,7 @@
             color="green"
             @click="resumeWork()"
         >
-        {{ $t("buttons.resumeWork") }}
+            {{ $t("buttons.resumeWork") }}
         </v-btn>
 
         <v-btn
@@ -39,7 +39,7 @@
             color="red"
             @click="stopTimer()"
         >
-        {{ $t("buttons.stopTimer") }}
+            {{ $t("buttons.stopTimer") }}
         </v-btn>
     </div>
 </template>
@@ -55,29 +55,10 @@ const { t } = useI18n({
 const store = useCounterStore();
 
 const isOnBreak = ref(false);
-let timerInterval = null;
 
 // Запускает таймер
-const startTimer = () => {
-    store.updateTimerRun();
-    const startTime = Date.now();
-    localStorage.setItem("SEGMENT_START", startTime);
-
-    // console.log("Начинаю работу в", formatITime(startTime));
-
-    timerInterval = setInterval(() => {
-        updateTimer(startTime);
-    }, 1000);
-
-    let data = ref({
-        date: new Date().toLocaleDateString(),
-        startTime: startTime,
-        totalTime: 0,
-        segments: [],
-        comments: "",
-    });
-
-    store.createSession(data);
+const startSession = () => {
+    store.updateOpenStartDialog();
 };
 
 // Обновление таймера
@@ -96,15 +77,17 @@ const updateTimer = (time) => {
         minutes: formatTime(minutes),
         seconds: formatTime(seconds),
     };
-
     store.updateCurrentTime(currentTime);
+};
+
+// Приведение формата времени к нужному виду
+const formatTime = (time) => {
+    return time < 10 ? `0${time}` : time.toString();
 };
 
 // Начинаем перерыв
 const startBreak = () => {
-    clearInterval(timerInterval);
-    // console.log("Перерыв начат в ", formatITime(Date.now()));
-
+    store.clearIntervalTimer();
     localStorage.setItem("BREAK_START", Date.now());
     isOnBreak.value = true;
 
@@ -149,24 +132,17 @@ const resumeWork = () => {
     // Обновляет общий счетчик времени
     const newTime = store.getSession.startTime + totalBreak;
 
-    timerInterval = setInterval(() => {
-        if (newTime) {
-            updateTimer(newTime);
-        }
+    const timerInterval = setInterval(() => {
+        updateTimer(newTime);
     }, 1000);
+    
+    store.updateTimerInterval(timerInterval)
 };
 
-
-// Открывает диалоговое окно, очищает интервал 
+// Открывает диалоговое окно, очищает интервал
 const stopTimer = () => {
     store.updateOpenDialog();
-    clearInterval(timerInterval);
-};
-
-
-// Приведение формата времени к нужному виду
-const formatTime = (time) => {
-    return time < 10 ? `0${time}` : time.toString();
+    store.clearIntervalTimer();
 };
 
 // const formatITime = (date) => {
@@ -181,8 +157,6 @@ const formatTime = (time) => {
 onUnmounted(() => {
     console.log("Компонент уничтожен");
 });
-
-
 </script>
 
 <style>

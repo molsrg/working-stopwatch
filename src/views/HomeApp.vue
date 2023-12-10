@@ -4,6 +4,7 @@
         <Counter></Counter>
         <WorkDay></WorkDay>
         <VDialog></VDialog>
+        <VStartDialog></VStartDialog>
     </v-main>
 </template>
 
@@ -12,6 +13,7 @@ import Navigation from "@/components/NavigationApp.vue";
 import Counter from "@/components/CountUp.vue";
 import WorkDay from "@/components/WorkDay.vue";
 import VDialog from "@/components/DialogApp.vue";
+import VStartDialog from "@/components/StartDialog.vue";
 </script>
 
 
