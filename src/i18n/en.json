@@ -1,0 +1,10 @@
+{
+    "title": "Time to Work", 
+    "buttons": {
+        "startTimer": "Get Started",
+        "breakTime": "Take a Break",
+        "resumeWork": "Continue Work",
+        "stopTimer": "Stop Working"
+    }
+
+}
