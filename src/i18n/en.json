@@ -14,5 +14,13 @@
     "finishDialog": {
         "title": "Well done, you've worked well today! Leave a short comment",
         "inputTitleSession": "Leave a comment here"
+    },
+    "stats": {
+        "headers": {
+            "date": "Date",
+            "totalCount": "Total Time",
+            "comments": "Comment",
+            "segments": "Number of Segments"
+        }
     }
 }

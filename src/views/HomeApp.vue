@@ -5,14 +5,17 @@
     <!-- <VBanner class="banner" v-if="store.getSession.length > 0"></VBanner> -->
     <v-main class="container">
         <Counter></Counter>
-        <WorkDay></WorkDay>
+        <Segments :data="store.getSession"></Segments>
     </v-main>
 </template>
 
 <script setup>
+import { useCounterStore } from "@/store/index.js";
+const store = useCounterStore();
+
 import Navigation from "@/components/NavigationApp.vue";
 import Counter from "@/components/CountUp.vue";
-import WorkDay from "@/components/WorkDay.vue";
+import Segments from "@/components/SegementApp.vue";
 import VFinishDialog from "@/components/FinishDialog.vue";
 import VStartDialog from "@/components/StartDialog.vue";
 // import VBanner from "@/components/VBanner.vue";
