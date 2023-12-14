@@ -46,6 +46,7 @@ export const useCounterStore = defineStore("counter", {
     actions: {
         createSession(data){
             this.session = data
+            localStorage.setItem("SESSION", JSON.stringify(data.value));
         }, 
         updateSessionSegment(data){
             this.session.segments.push(data)
@@ -54,6 +55,7 @@ export const useCounterStore = defineStore("counter", {
                 return total + segment.totalTime;
             }, 0)
             this.session.totalTime = totalSessionTime
+            localStorage.setItem("SESSION", JSON.stringify(this.session));
         }, 
         updateSessionTimeBreak(data) {
             this.session.segments[data.count].breakTime = data.breakTime
@@ -62,7 +64,12 @@ export const useCounterStore = defineStore("counter", {
             this.session.comments = data
         }, 
 
+        updateSession(data){
+            this.session = data
+        },
+
         updateSessions(){
+            this.session.totalTime = formatMilliseconds(this.session.totalTime)
             this.sessions.push(this.session)
             this.currentTime = {
                 hours: "00",
@@ -70,6 +77,12 @@ export const useCounterStore = defineStore("counter", {
                 seconds: "00",
             },
             this.session = []
+            localStorage.setItem("SESSIONS", JSON.stringify(this.sessions));
+            localStorage.removeItem("SESSION")
+        },
+
+        downoloadSessions(data){
+            this.sessions = data
         },
 
 
@@ -85,6 +98,7 @@ export const useCounterStore = defineStore("counter", {
         },
         updateCurrentTime(data){
             this.currentTime = data
+            localStorage.setItem("TOTAL_TIME", JSON.stringify(this.currentTime));
         }, 
         updateTimerInterval(data){
             this.timerInterval = data
@@ -94,3 +108,14 @@ export const useCounterStore = defineStore("counter", {
         }
     },
 });
+
+
+function formatMilliseconds(milliseconds) {
+    const totalSeconds = Math.floor(milliseconds / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    return formattedTime;
+}

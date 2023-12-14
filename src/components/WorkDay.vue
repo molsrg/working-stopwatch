@@ -1,8 +1,4 @@
 <template>
-    {{ store.getSession.date }}
-    {{ store.getSession.totalTime }}
-    {{ store.getSession.startTime }}
-
     <v-list lines="two" v-if="store.getSession">
         <v-list-item
             v-for="(segment, idx) in store.getSession.segments"
@@ -22,9 +18,13 @@
   
   <script setup>
 import { useCounterStore } from "@/store/index.js";
-
+import { onMounted } from "vue";
 const store = useCounterStore();
-
+if(localStorage.getItem("SESSION")) {
+    onMounted(() => {
+        store.updateSession(JSON.parse(localStorage.getItem("SESSION")))
+});
+}
 
 
 function formatMilliseconds(milliseconds) {

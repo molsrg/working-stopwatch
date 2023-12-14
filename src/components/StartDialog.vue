@@ -1,21 +1,23 @@
 <template>
     <v-dialog v-model="store.openStartDialog" width="600">
-        <v-card  :title="$t('startDialog.title')">
+        <v-card :title="$t('startDialog.title')">
             <v-card-text>
-                
                 <v-text-field
                     v-model="titleSession"
                     :label="$t('startDialog.inputTitleSession')"
                     clearable
                     required
-                    hide-details
                 ></v-text-field>
             </v-card-text>
 
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn  @click="startSession()"> {{ $t("buttons.startTimer") }}</v-btn>
-                <v-btn  @click="store.updateOpenStartDialog"> {{ $t("buttons.cancel") }}</v-btn>
+                <v-btn @click="startSession()">
+                    {{ $t("buttons.startTimer") }}</v-btn
+                >
+                <v-btn @click="store.updateOpenStartDialog">
+                    {{ $t("buttons.cancel") }}</v-btn
+                >
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -35,22 +37,19 @@ const titleSession = ref("");
 
 // Запускает таймер
 const startSession = () => {
-    store.updateOpenStartDialog()
+    store.updateOpenStartDialog();
     store.updateTimerRun();
     const startTime = Date.now();
     localStorage.setItem("SEGMENT_START", startTime);
 
-
-
     const timerInterval = setInterval(() => {
         updateTimer(startTime);
     }, 1000);
-    
-    store.updateTimerInterval(timerInterval)
 
+    store.updateTimerInterval(timerInterval);
 
     let data = ref({
-        title: titleSession.value, 
+        title: titleSession.value,
         date: new Date().toLocaleDateString(),
         startTime: startTime,
         totalTime: 0,
@@ -59,11 +58,8 @@ const startSession = () => {
     });
 
     store.createSession(data);
-    titleSession.value = ""
+    titleSession.value = "";
 };
-
-
-
 
 // Обновление таймера
 const updateTimer = (time) => {
@@ -89,8 +85,6 @@ const updateTimer = (time) => {
 const formatTime = (time) => {
     return time < 10 ? `0${time}` : time.toString();
 };
-
-
 </script>
 
 

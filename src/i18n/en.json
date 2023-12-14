@@ -9,7 +9,7 @@
     },
     "startDialog": {
         "title": "Let's start a new session",
-        "inputTitleSession": "Enter session title"
+        "inputTitleSession": "Enter the tasks that you want to implement today"
     },
     "finishDialog": {
         "title": "Well done, you've worked well today! Leave a short comment",

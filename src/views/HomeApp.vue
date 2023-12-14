@@ -1,10 +1,11 @@
 <template>
-    <Navigation />
+    <Navigation />        
+    <VStartDialog></VStartDialog>
+    <VFinishDialog></VFinishDialog>
+    <!-- <VBanner class="banner" v-if="store.getSession.length > 0"></VBanner> -->
     <v-main class="container">
         <Counter></Counter>
         <WorkDay></WorkDay>
-        <VDialog></VDialog>
-        <VStartDialog></VStartDialog>
     </v-main>
 </template>
 
@@ -12,8 +13,10 @@
 import Navigation from "@/components/NavigationApp.vue";
 import Counter from "@/components/CountUp.vue";
 import WorkDay from "@/components/WorkDay.vue";
-import VDialog from "@/components/DialogApp.vue";
+import VFinishDialog from "@/components/FinishDialog.vue";
 import VStartDialog from "@/components/StartDialog.vue";
+// import VBanner from "@/components/VBanner.vue";
+
 </script>
 
 
@@ -28,4 +31,11 @@ import VStartDialog from "@/components/StartDialog.vue";
     column-gap: 10px;
     row-gap: 10px;
 }
+.banner{
+    position: fixed;
+    z-index: 10;
+    top: 80px;
+    left: 80vw;
+}
+
 </style>
