@@ -19,8 +19,6 @@
 </template>
   
   <script setup>
-import { useCounterStore } from "@/store/index.js";
-const store = useCounterStore();
 const props = defineProps(["data"]);
 
 function formatMilliseconds(milliseconds) {

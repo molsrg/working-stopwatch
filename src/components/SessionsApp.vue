@@ -10,6 +10,7 @@
         <template v-slot:expanded-row="{ columns, item }">
             <tr>
                 <td :colspan="columns.length">
+                    <SessionTask :tasks="item.tasks"></SessionTask>
                     <Segments :data="item"></Segments>
                 </td>
             </tr>
@@ -21,7 +22,7 @@
 import { useCounterStore } from "@/store/index.js";
 import { useI18n } from "vue-i18n";
 import Segments from '@/components/SegementApp.vue'
-
+import SessionTask from '@/components/SessionTask.vue'
 
 const { t } = useI18n({
     useScope: "global",

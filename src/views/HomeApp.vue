@@ -5,6 +5,7 @@
     <!-- <VBanner class="banner" v-if="store.getSession.length > 0"></VBanner> -->
     <v-main class="container">
         <Counter></Counter>
+        <SessionTask :tasks="store.getSession.tasks"></SessionTask>
         <Segments :data="store.getSession"></Segments>
     </v-main>
 </template>
@@ -18,6 +19,7 @@ import Counter from "@/components/CountUp.vue";
 import Segments from "@/components/SegementApp.vue";
 import VFinishDialog from "@/components/FinishDialog.vue";
 import VStartDialog from "@/components/StartDialog.vue";
+import SessionTask from "@/components/SessionTask.vue";
 // import VBanner from "@/components/VBanner.vue";
 
 </script>
@@ -41,4 +43,7 @@ import VStartDialog from "@/components/StartDialog.vue";
     left: 80vw;
 }
 
+.task {
+
+}
 </style>
