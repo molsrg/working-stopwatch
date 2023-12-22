@@ -1,6 +1,7 @@
 <template>
     <Navigation />
     <VStartDialog></VStartDialog>
+    <AddTaskDialog></AddTaskDialog>
     <VFinishDialog></VFinishDialog>
     <v-main class="container">
         <Counter></Counter>
@@ -15,19 +16,15 @@
 
 <script setup>
 import { useCounterStore } from "@/store/index.js";
-const store = useCounterStore();
-import { useI18n } from "vue-i18n";
-
-const { t } = useI18n({
-    useScope: "global",
-});
-
 import Navigation from "@/components/NavigationApp.vue";
 import Counter from "@/components/CountUp.vue";
 import Segments from "@/components/SegementApp.vue";
 import VFinishDialog from "@/components/modal/FinishDialog.vue";
 import VStartDialog from "@/components/modal/StartDialog.vue";
+import AddTaskDialog from "@/components/modal/AddTask.vue";
 import SessionTask from "@/components/SessionTask.vue";
+
+const store = useCounterStore();
 </script>
 
 
@@ -42,12 +39,7 @@ import SessionTask from "@/components/SessionTask.vue";
     column-gap: 10px;
     row-gap: 10px;
 }
-.banner {
-    position: fixed;
-    z-index: 10;
-    top: 80px;
-    left: 80vw;
-}
+
 .section__tasks {
     display: flex; 
     flex-direction: column;

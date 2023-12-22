@@ -33,7 +33,7 @@
             >
                 {{ $t("buttons.resumeWork") }}
             </v-btn>
-            <v-btn v-if="store.isTimerRun">{{$t("sessionTask.addTask")}}</v-btn>
+            <v-btn v-if="store.isTimerRun" @click="store.updateAddTaskOpenDialog">{{$t("sessionTask.addTask")}}</v-btn>
             <v-btn
                 v-if="store.isTimerRun"
                 variant="tonal"
@@ -51,8 +51,9 @@
 <script setup>
 import { ref } from "vue";
 import { useCounterStore } from "@/store/index.js";
-import { useI18n } from "vue-i18n";
+
 import UpdateTimer from "@/Timer/UpdateTimer.js";
+import { useI18n } from "vue-i18n";
 const { t } = useI18n({
     useScope: "global",
 });

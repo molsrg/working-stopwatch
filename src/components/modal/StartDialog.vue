@@ -1,15 +1,16 @@
 <template>
-    <v-dialog v-model="store.openStartDialog" width="600">
-        <v-card :title="$t('startDialog.title')">
+    <v-dialog v-model="store.openStartDialog" width="600" >
+        <v-card :title="$t('startDialog.title')"> 
             <v-card-text>
                 <v-text-field
                     v-model="taskSession"
                     :label="$t('startDialog.inputTitleSession')"
                     clearable
+                    @keydown.enter="addTask()"
                 ></v-text-field>
             </v-card-text>
 
-            <v-list lines="one">
+            <v-list lines="one" :slim="true">
                 <v-list-item
                     v-for="(task, idx) in tasksSession"
                     :key="idx"
@@ -20,7 +21,7 @@
             </v-list>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn @click="addTask()">{{ $t("buttons.addTask") }}</v-btn>
+                <v-btn @click="addTask()" >{{ $t("buttons.addTask") }}</v-btn>
 
                 <v-btn @click="startSession()">
                     {{ $t("buttons.startTimer") }}</v-btn
@@ -36,17 +37,16 @@
 <script setup>
 import { useCounterStore } from "@/store/index.js";
 import { ref } from "vue";
-import { useI18n } from "vue-i18n";
 import UpdateTimer from "@/Timer/UpdateTimer.js";
-
-const { t } = useI18n({
-    useScope: "global",
-});
-
 
 const store = useCounterStore();
 const taskSession = ref("");
 const tasksSession = ref([]);
+
+
+const clearSearch = () => {
+    console.log(1)
+}
 
 // Добавление задачи в список задач сессии
 const addTask = () => {

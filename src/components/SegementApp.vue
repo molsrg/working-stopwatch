@@ -36,13 +36,11 @@
 <script setup>
 import { ref } from "vue";
 import { useCounterStore } from "@/store/index.js";
-import { useI18n } from "vue-i18n";
+
 const store = useCounterStore();
 
 const props = defineProps(["data"]);
-const { t } = useI18n({
-    useScope: "global",
-});
+
 const models = ref([]); // Массив для уникальных моделей
 
 // Обновление моделей комментариев

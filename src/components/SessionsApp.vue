@@ -20,9 +20,10 @@
 
 <script setup>
 import { useCounterStore } from "@/store/index.js";
-import { useI18n } from "vue-i18n";
 import Segments from '@/components/SegementApp.vue'
 import SessionTask from '@/components/SessionTask.vue'
+import { useI18n } from "vue-i18n";
+
 
 const { t } = useI18n({
     useScope: "global",

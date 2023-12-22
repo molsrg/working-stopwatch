@@ -15,7 +15,6 @@
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn @click="stopTimer()"> {{ $t("buttons.stopTimer") }}</v-btn>
-                <!-- <v-btn text="Отмена" @click="store.updateOpenDialog"></v-btn> -->
             </v-card-actions>
         </v-card>
     </v-dialog>

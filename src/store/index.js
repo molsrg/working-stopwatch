@@ -5,15 +5,17 @@ export const useCounterStore = defineStore("counter", {
         session: [], 
         sessions: [], 
 
-
         currentTime: {
             hours: "00",
             minutes: "00",
             seconds: "00",
         },
 
+
+
         openStartDialog: false,
         openDialog: false,
+        openAddTaskDialog: false,
         timerRun: false, 
         timerInterval: null
     }),
@@ -31,6 +33,9 @@ export const useCounterStore = defineStore("counter", {
         },
         isOpenStartDialog(state) {
             return state.openStartDialog
+        },
+        isOpenAddTaskDialog(state) {
+            return state.openAddTaskDialog
         },
         isTimerRun(state) {
             return state.timerRun
@@ -93,6 +98,10 @@ export const useCounterStore = defineStore("counter", {
         updateOpenStartDialog() {
             this.openStartDialog = !this.openStartDialog
         }, 
+
+        updateAddTaskOpenDialog(){
+            this.openAddTaskDialog = !this.openAddTaskDialog
+        },
         updateTimerRun() {
             this.timerRun = !this.timerRun
         },
@@ -107,18 +116,35 @@ export const useCounterStore = defineStore("counter", {
             clearInterval(this.timerInterval)
         }, 
         updateSegmentComments(data){
-            for (let i = 0; i < this.sessions.length; i++) {
-                if (this.sessions[i].startTime === data.session) {
-                    this.sessions[i].segments[data.index].comments = data.comments;
-            
-                    const commentIndex = this.sessions[i].tasks.findIndex(task => task === data.comments);
-                    if (commentIndex !== -1) {
-                        this.sessions[i].tasks.splice(commentIndex, 1);
+            // обработать утром 
+            if(localStorage.getItem("SESSION") && localStorage.getItem("TOTAL_TIME")){
+                this.session.segments[data.index].comments = data.comments
+
+                const commentIndex = this.session.tasks.findIndex(task => task === data.comments);
+                if (commentIndex !== -1) {
+                    this.session.tasks.splice(commentIndex, 1);
+                }
+                
+            }
+            else{
+                for (let i = 0; i < this.sessions.length; i++) {
+                    if (this.sessions[i].startTime === data.session) {
+                        this.sessions[i].segments[data.index].comments = data.comments;
+                
+                        const commentIndex = this.sessions[i].tasks.findIndex(task => task === data.comments);
+                        if (commentIndex !== -1) {
+                            this.sessions[i].tasks.splice(commentIndex, 1);
+                        }
                     }
                 }
+                localStorage.setItem("SESSION", JSON.stringify(this.session));
+                localStorage.setItem("SESSIONS", JSON.stringify(this.sessions));
             }
-            localStorage.setItem("SESSIONS", JSON.stringify(this.sessions));
+            
         },
+        updateTaskSession(data){
+            this.session.tasks.push(data)
+        }
     },
 });
 
