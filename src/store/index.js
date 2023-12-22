@@ -45,16 +45,16 @@ export const useCounterStore = defineStore("counter", {
 
     actions: {
         createSession(data){
-            this.session = data
+            this.session = data.value
             localStorage.setItem("SESSION", JSON.stringify(data.value));
         }, 
-        updateSessionSegment(data){
+        addSessionSegment(data){
             this.session.segments.push(data)
             // Вычисление общей длительности всех сегментов
-            const totalSessionTime = this.session.segments.reduce((total, segment) => {
+            this.session.totalTime = this.session.segments.reduce((total, segment) => {
                 return total + segment.totalTime;
             }, 0)
-            this.session.totalTime = totalSessionTime
+            
             localStorage.setItem("SESSION", JSON.stringify(this.session));
         }, 
         updateSessionTimeBreak(data) {
@@ -105,7 +105,25 @@ export const useCounterStore = defineStore("counter", {
         }, 
         clearIntervalTimer(){
             clearInterval(this.timerInterval)
-        }
+        }, 
+        updateSegmentComments(data){
+            this.session.segments[data.index].comments = data.comments
+            for(let i = 0; i < this.session.tasks.length; i++){
+                if(this.session.tasks[i] == data.comments) {
+                    this.session.tasks.splice(i,1)
+                }
+            }
+        },
+
+
+        updateTaskTimerStart(index){
+            const task = this.session.tasks[index]
+            task.timerStart = Date.now();
+        }, 
+        updateTaskTimerEnd(index){
+            const task = this.session.tasks[index]
+            task.timerEnd = Date.now();
+        }, 
     },
 });
 

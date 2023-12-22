@@ -33,7 +33,7 @@
             >
                 {{ $t("buttons.resumeWork") }}
             </v-btn>
-
+            <v-btn v-if="store.isTimerRun">{{$t("sessionTask.addTask")}}</v-btn>
             <v-btn
                 v-if="store.isTimerRun"
                 variant="tonal"
@@ -42,6 +42,8 @@
             >
                 {{ $t("buttons.stopTimer") }}
             </v-btn>
+
+
         </div>
     </section>
 </template>
@@ -50,7 +52,7 @@
 import { ref } from "vue";
 import { useCounterStore } from "@/store/index.js";
 import { useI18n } from "vue-i18n";
-
+import UpdateTimer from "@/Timer/UpdateTimer.js";
 const { t } = useI18n({
     useScope: "global",
 });
@@ -61,16 +63,14 @@ const isOnBreak = ref(false);
 
 
 const confirmSave = () => {
-    localStorage.setItem("BREAK_START", Date.now());
+    startBreak()
     localStorage.setItem("TOTAL_TIME", JSON.stringify(store.getCurrentTime));
     store.clearIntervalTimer();
 };
 
 
 if (localStorage.getItem("SEGMENT_START")) {
-
         store.updateTimerRun();
-        store.clearIntervalTimer();
         isOnBreak.value = true;
         store.updateCurrentTime(JSON.parse(localStorage.getItem("TOTAL_TIME")));
         window.addEventListener("beforeunload", confirmSave);
@@ -78,33 +78,9 @@ if (localStorage.getItem("SEGMENT_START")) {
 
 
 
-// Запускает таймер
+// Открываем стартовый диалог 
 const startSession = () => {
     store.updateOpenStartDialog();
-};
-
-// Обновление таймера
-const updateTimer = (time) => {
-    const now = Date.now();
-    const timeHasPassed = now - time;
-
-    const hours = Math.floor(timeHasPassed / (1000 * 60 * 60));
-    const minutes = Math.floor(
-        (timeHasPassed % (1000 * 60 * 60)) / (1000 * 60)
-    );
-    const seconds = Math.floor((timeHasPassed % (1000 * 60)) / 1000);
-
-    const currentTime = {
-        hours: formatTime(hours),
-        minutes: formatTime(minutes),
-        seconds: formatTime(seconds),
-    };
-    store.updateCurrentTime(currentTime);
-};
-
-// Приведение формата времени к нужному виду
-const formatTime = (time) => {
-    return time < 10 ? `0${time}` : time.toString();
 };
 
 // Начинаем перерыв
@@ -122,24 +98,23 @@ const startBreak = () => {
         segmentStart: sessionStart,
         segmentEnd: Date.now(),
         breakTime: 0,
+        comments: '',
     };
 
-    store.updateSessionSegment(dataSegment);
+    store.addSessionSegment(dataSegment);
 };
 
 // Отдых после перерыва
 const resumeWork = () => {
     isOnBreak.value = false;
-    const breakStart = parseInt(localStorage.getItem("BREAK_START"), 10);
-    const breakEndTime = Date.now();
-
-    localStorage.setItem("SEGMENT_START", breakEndTime);
-
-    // console.log("Возвращаюсь к работе в ", formatITime(breakEndTime));
 
     // Вычисляет длительность перерыва до следующего сегмента
+    const breakStart = parseInt(localStorage.getItem("BREAK_START"), 10);
+    const breakEndTime = Date.now();
     const breakDuration = breakEndTime - breakStart;
-    // console.log("Длительность перерыва ", breakDuration, "мс");
+
+    localStorage.setItem("SEGMENT_START", Date.now());
+
 
     const dataBreak = {
         count: store.getSession.segments.length - 1,
@@ -154,8 +129,10 @@ const resumeWork = () => {
     // Обновляет общий счетчик времени
     const newTime = store.getSession.startTime + totalBreak;
 
+    
     const timerInterval = setInterval(() => {
-        updateTimer(newTime);
+        let currentTime = UpdateTimer(newTime);
+        store.updateCurrentTime(currentTime)
     }, 1000);
 
     store.updateTimerInterval(timerInterval);
@@ -180,10 +157,8 @@ const stopTimer = () => {
 
 .btn__container {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    column-gap: 10px;
-    row-gap: 10px;
     flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
 }
 </style>

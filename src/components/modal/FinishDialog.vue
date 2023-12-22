@@ -46,6 +46,7 @@ const stopTimer = () => {
     localStorage.removeItem("BREAK_START");
     localStorage.removeItem("TIMER_START");
     localStorage.removeItem("SEGMENT_START");
+    localStorage.removeItem("TOTAL_TIME");
 };
 
 

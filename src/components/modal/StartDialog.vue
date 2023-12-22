@@ -11,24 +11,22 @@
 
             <v-list lines="one">
                 <v-list-item
-                    v-for="(n, idx) in tasksSession"
+                    v-for="(task, idx) in tasksSession"
                     :key="idx"
-                    :title="'Task ' + Number(idx + 1)"
-                    :subtitle="n"
+                    :title="task"
+                    :subtitle="`${$t('startDialog.task')} ${Number(idx + 1)}`"
                     prepend-icon="mdi-circle-small"
                 ></v-list-item>
             </v-list>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn @click="addTask()"> Добавить задачу</v-btn>
+                <v-btn @click="addTask()">{{ $t("buttons.addTask") }}</v-btn>
 
                 <v-btn @click="startSession()">
                     {{ $t("buttons.startTimer") }}</v-btn
                 >
 
-                <v-btn @click="exit()">
-                    {{ $t("buttons.cancel") }}</v-btn
-                >
+                <v-btn @click="exit()"> {{ $t("buttons.cancel") }}</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -39,22 +37,24 @@
 import { useCounterStore } from "@/store/index.js";
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
+import UpdateTimer from "@/Timer/UpdateTimer.js";
 
 const { t } = useI18n({
     useScope: "global",
 });
 
+
 const store = useCounterStore();
 const taskSession = ref("");
 const tasksSession = ref([]);
 
-
+// Добавление задачи в список задач сессии
 const addTask = () => {
-    if(taskSession.value.length == 0){
-        return 
+    if (taskSession.value.length == 0) {
+        return;
     }
-
-    tasksSession.value.push(taskSession.value);
+    
+    tasksSession.value.push(taskSession.value)
     taskSession.value = "";
 };
 
@@ -64,16 +64,19 @@ const startSession = () => {
         addTask();
     }
 
-    store.updateOpenStartDialog();
-    store.updateTimerRun();
     const startTime = Date.now();
-    localStorage.setItem("SEGMENT_START", startTime);
-
     const timerInterval = setInterval(() => {
-        updateTimer(startTime);
+        let currentTime = UpdateTimer(startTime);
+        store.updateCurrentTime(currentTime)
     }, 1000);
 
+
+
+    store.updateOpenStartDialog();
+    store.updateTimerRun();
     store.updateTimerInterval(timerInterval);
+    localStorage.setItem("SEGMENT_START", startTime);
+
 
     let data = ref({
         tasks: tasksSession.value,
@@ -86,40 +89,13 @@ const startSession = () => {
 
     store.createSession(data);
     tasksSession.value = [];
+
 };
 
-// Обновление таймера
-const updateTimer = (time) => {
-    const now = Date.now();
-    const timeHasPassed = now - time;
-
-    const hours = Math.floor(timeHasPassed / (1000 * 60 * 60));
-    const minutes = Math.floor(
-        (timeHasPassed % (1000 * 60 * 60)) / (1000 * 60)
-    );
-    const seconds = Math.floor((timeHasPassed % (1000 * 60)) / 1000);
-
-    const currentTime = {
-        hours: formatTime(hours),
-        minutes: formatTime(minutes),
-        seconds: formatTime(seconds),
-    };
-
-    store.updateCurrentTime(currentTime);
-};
-
-// Приведение формата времени к нужному виду
-const formatTime = (time) => {
-    return time < 10 ? `0${time}` : time.toString();
-};
-
-// Выход из стартового диалога 
+// Выход из стартового диалога
 const exit = () => {
-    store.updateOpenStartDialog()
-    tasksSession.value = []
-}
+    store.updateOpenStartDialog();
+    tasksSession.value = [];
+};
 </script>
 
-
-<style>
-</style>

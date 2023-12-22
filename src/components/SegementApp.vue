@@ -1,5 +1,6 @@
 <template>
     <v-list lines="two">
+
         <v-list-item
             v-for="(segment, idx) in props.data.segments"
             :key="idx"
@@ -7,19 +8,44 @@
             :subtitle="`Total Time: ${formatMilliseconds(
                 segment.totalTime
             )}, Break Time: ${formatMilliseconds(segment.breakTime)}`"
-            min-width="80vw"
-            density="comfortable"
-            min-height="100"
+            width="80vw"
+            
             class="segments"
         >
+            <v-combobox
+                label="Combobox"
+                :items="props.data.tasks"
+                v-model="model"
+                append-icon="mdi-send"
+                @click:append="sendMessage(idx)"
+                v-if="segment.comments.length == 0"
+            ></v-combobox>
+
             Time Start - {{ formatTimeFromMilliseconds(segment.segmentStart) }},
             Time End - {{ formatTimeFromMilliseconds(segment.segmentEnd) }}
         </v-list-item>
     </v-list>
 </template>
   
-  <script setup>
+<script setup>
+import { ref } from "vue";
+
 const props = defineProps(["data"]);
+import { useCounterStore } from "@/store/index.js";
+const model = ref("");
+const store = useCounterStore();
+
+
+const sendMessage = (segment) => {
+    console.log(model.value, segment);
+
+    const data = {
+        index: segment, 
+        comments: model.value
+    }
+    store.updateSegmentComments(data)
+    model.value = ""
+};
 
 function formatMilliseconds(milliseconds) {
     const totalSeconds = Math.floor(milliseconds / 1000);
@@ -46,8 +72,5 @@ const formatTimeFromMilliseconds = (milliseconds) => {
   
 
 <style>
-.segments {
-    display: flex;
-    flex-direction: column;
-}
+
 </style>

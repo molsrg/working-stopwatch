@@ -3,7 +3,7 @@
         :headers="headers"
         :items="sessions"
         class="stats"
-        item-value="title"
+        item-value="startTime"
         
         show-expand
     >
