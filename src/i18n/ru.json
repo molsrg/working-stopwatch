@@ -28,7 +28,12 @@
     "sessionTask": {
         "title": "Задачи на сегодня", 
         "addTask": "Добавить задачу"
-
+    }, 
+    "segments": {
+        "title": "Отрезок",
+        "totalTime": "Общее время", 
+        "breakTime": "Время перерыва", 
+        "comments": "Комментарий"
     }
 
 }

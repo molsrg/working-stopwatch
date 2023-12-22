@@ -107,23 +107,18 @@ export const useCounterStore = defineStore("counter", {
             clearInterval(this.timerInterval)
         }, 
         updateSegmentComments(data){
-            this.session.segments[data.index].comments = data.comments
-            for(let i = 0; i < this.session.tasks.length; i++){
-                if(this.session.tasks[i] == data.comments) {
-                    this.session.tasks.splice(i,1)
+            for (let i = 0; i < this.sessions.length; i++) {
+                if (this.sessions[i].startTime === data.session) {
+                    this.sessions[i].segments[data.index].comments = data.comments;
+            
+                    const commentIndex = this.sessions[i].tasks.findIndex(task => task === data.comments);
+                    if (commentIndex !== -1) {
+                        this.sessions[i].tasks.splice(commentIndex, 1);
+                    }
                 }
             }
+            localStorage.setItem("SESSIONS", JSON.stringify(this.sessions));
         },
-
-
-        updateTaskTimerStart(index){
-            const task = this.session.tasks[index]
-            task.timerStart = Date.now();
-        }, 
-        updateTaskTimerEnd(index){
-            const task = this.session.tasks[index]
-            task.timerEnd = Date.now();
-        }, 
     },
 });
 

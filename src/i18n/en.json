@@ -1,27 +1,38 @@
 {
-    "title": "Time to work",
+    "title": "Time to Work",
     "buttons": {
-        "startTimer": "Start work",
-        "breakTime": "Take a break",
-        "resumeWork": "Resume work",
-        "stopTimer": "Finish work",
-        "cancel": "Cancel", 
+        "startTimer": "Start Working",
+        "breakTime": "Take a Break",
+        "resumeWork": "Resume Working",
+        "stopTimer": "Finish Working",
+        "cancel": "Cancel",
         "addTask": "Add Task"
     },
     "startDialog": {
-        "title": "Let's start a new session",
-        "inputTitleSession": "Enter the tasks that you want to implement today"
+        "title": "Let's Start a New Session",
+        "inputTitleSession": "Enter the tasks you want to accomplish today",
+        "task": "Task"
     },
     "finishDialog": {
-        "title": "Well done, you've worked well today! Leave a short comment",
+        "title": "Well done, you've worked well today! Leave a brief comment",
         "inputTitleSession": "Leave a comment here"
     },
     "stats": {
         "headers": {
             "date": "Date",
             "totalCount": "Total Time",
-            "comments": "Comment",
-            "segments": "Number of Segments"
+            "comments": "Comments",
+            "segments": "Segments Count"
         }
+    },
+    "sessionTask": {
+        "title": "Today's Tasks",
+        "addTask": "Add Task"
+    },
+    "segments": {
+        "title": "Segment",
+        "totalTime": "Total Time",
+        "breakTime": "Break Time",
+        "comments": "Comments"
     }
 }
