@@ -1,38 +1,50 @@
 {
-    "title": "Time to Work",
+    "title": "Time to work",
     "buttons": {
-        "startTimer": "Start Working",
-        "breakTime": "Take a Break",
-        "resumeWork": "Resume Working",
-        "stopTimer": "Finish Working",
-        "cancel": "Cancel",
-        "addTask": "Add Task"
+        "startTimer": "Get started",
+        "breakTime": "Take a break",
+        "resumeWork": "Back to work",
+        "stopTimer": "Finish work",
+        "cancel": "Exit",
+        "addTask": "Add task"
     },
     "startDialog": {
-        "title": "Let's Start a New Session",
-        "inputTitleSession": "Enter the tasks you want to accomplish today",
+        "title": "Let's start a new session",
+        "inputTitleSession": "Enter the tasks that you want to implement today",
         "task": "Task"
     },
+
+    "addTask": {
+        "title": "Add a task",
+        "label": "Enter the text of the task here",
+        "addTask": "Add"
+    },
     "finishDialog": {
-        "title": "Well done, you've worked well today! Leave a brief comment",
+        "title": "Well done, you did a good job today! Leave a small comment",
         "inputTitleSession": "Leave a comment here"
     },
+
     "stats": {
         "headers": {
             "date": "Date",
-            "totalCount": "Total Time",
-            "comments": "Comments",
-            "segments": "Segments Count"
+            "totalCount": "Total time",
+            "comments": "Comment",
+            "segments": "Number of segments"
         }
     },
     "sessionTask": {
-        "title": "Today's Tasks",
-        "addTask": "Add Task"
+        "title": "Tasks for today",
+        "addTask": "Add task"
     },
     "segments": {
         "title": "Segment",
-        "totalTime": "Total Time",
+        "totalTime": "Run Time",
         "breakTime": "Break Time",
-        "comments": "Comments"
+        "comments": "Comment"
+    },
+
+    "info": {
+        "title": "About the project",
+        "text": "A small web application written to optimize your working time. The application is written in Vue 3 (Composition API) using Vuetify components. All session data is stored in Local Storage. You can view session histories and comment on each of the session segments. In the future, it is planned to optimize the code, add new methods that help optimize the developer's time. Thank you for your time!  "
     }
 }

@@ -40,7 +40,7 @@
 import Navigation from "@/components/NavigationApp.vue";
 import { useI18n } from "vue-i18n";
 
-const { t, locale } = useI18n({
+const { t } = useI18n({
     useScope: "global",
 });
 </script>

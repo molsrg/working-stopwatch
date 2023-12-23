@@ -1,0 +1,47 @@
+{
+    "title": "Il est temps de travailler",
+    "buttons": {
+        "startTimer": "Commencer le travail",
+        "breakTime": "Prendre une pause",
+        "resumeWork": "Reprendre le travail",
+        "stopTimer": "Terminer le travail",
+        "cancel": "Quitter",
+        "addTask": "Ajouter une tâche"
+    },
+    "startDialog": {
+        "title": "Commençons une nouvelle session",
+        "inputTitleSession": "Entrez les tâches que vous souhaitez réaliser aujourd'hui",
+        "task": "Tâche"
+    },
+    "addTask": {
+        "title": "Ajouter une tâche",
+        "label": "Entrez le texte de la tâche ici",
+        "addTask": "Ajouter"
+    },
+    "finishDialog": {
+        "title": "Bravo, vous avez bien travaillé aujourd'hui ! Laissez un petit commentaire",
+        "inputTitleSession": "Laissez un commentaire ici"
+    },
+    "stats": {
+        "headers": {
+            "date": "Date",
+            "totalCount": "Temps total",
+            "comments": "Commentaire",
+            "segments": "Nombre de segments"
+        }
+    },
+    "sessionTask": {
+        "title": "Tâches pour aujourd'hui",
+        "addTask": "Ajouter une tâche"
+    },
+    "segments": {
+        "title": "Segment",
+        "totalTime": "Temps d'exécution",
+        "breakTime": "Temps de pause",
+        "comments": "Commentaire"
+    },
+    "info": {
+        "title": "À propos du projet",
+        "text": "Une petite application web conçue pour optimiser votre temps de travail. L'application est développée avec Vue 3 (Composition API) en utilisant les composants Vuetify. Toutes les données de session sont enregistrées dans le stockage local. Vous pouvez consulter l'historique des sessions et commenter chaque segment de session. Des améliorations du code et de nouvelles fonctionnalités visant à optimiser le temps de développement sont prévues à l'avenir. Merci d'avoir pris le temps de découvrir cette application !"
+    }
+}

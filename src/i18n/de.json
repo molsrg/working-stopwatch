@@ -1,0 +1,50 @@
+{
+    "title": "Zeit zum Arbeiten",
+    "buttons": {
+        "startTimer": "Loslegen",
+        "breakTime": "Pause machen",
+        "resumeWork": "Zurück zur Arbeit",
+        "StopTimer": "Beenden",
+        "cancel": "Beenden",
+        "addTask": "Aufgabe hinzufügen"
+    },
+    "startDialog": {
+        "title": "Lass uns eine neue Sitzung beginnen",
+        "inputTitleSession": "Gib die Aufgaben ein, die du heute umsetzen möchtest",
+        "task": "Aufgabe"
+    },
+
+    "addTask": {
+        "title": "Aufgabe hinzufügen",
+        "label": "Gib hier den Text der Aufgabe ein",
+        "addTask": "Hinzufügen"
+    },
+    "finishDialog": {
+        "title": "Gut gemacht, du hast heute gute Arbeit geleistet! Hinterlasse einen kleinen Kommentar",
+        "inputTitleSession": "Lass das Commentary hier"
+    },
+
+    "stats": {
+        "headers": {
+            "date": "Datum",
+            "TotalCount": "Gesamtzeit",
+            "comments": "Kommentar",
+            "segments": "Anzahl der Segmente"
+        }
+    },
+    "sessionTask": {
+        "title": "Aufgaben für heute",
+        "addTask": "Aufgabe hinzufügen"
+    },
+    "segments": {
+        "title": "Strecke",
+        "totalTime": "Laufzeit",
+        "breakTime": "Breaktime",
+        "comments": "Kommentar"
+    },
+
+    "info": {
+        "title": "Über das Projekt",
+        "text": " Eine kleine Webanwendung, die geschrieben wurde, um Ihre Arbeitszeit zu optimieren. Die Anwendung ist in Vue 3 (Composition API) mit Vuetify-Komponenten geschrieben. Alle Sitzungsdaten werden im lokalen Speicher gespeichert. Sie können den Verlauf der Sitzungen und das Kommentieren der einzelnen Sitzungsabschnitte anzeigen. In Zukunft ist es geplant, den Code zu optimieren und neue Methoden hinzuzufügen, um die Zeit des Entwicklers zu optimieren. Danke, dass Sie sich die Zeit genommen haben!  "
+    }
+}

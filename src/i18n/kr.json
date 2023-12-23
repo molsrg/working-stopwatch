@@ -1,0 +1,47 @@
+{
+    "title": "작업할 시간입니다",
+    "buttons": {
+        "startTimer": "작업 시작",
+        "breakTime": "휴식 시간",
+        "resumeWork": "작업 재개",
+        "stopTimer": "작업 종료",
+        "cancel": "종료",
+        "addTask": "작업 추가"
+    },
+    "startDialog": {
+        "title": "새로운 세션을 시작합시다",
+        "inputTitleSession": "오늘 수행할 작업을 입력하세요",
+        "task": "작업"
+    },
+    "addTask": {
+        "title": "작업 추가",
+        "label": "작업 내용을 여기에 입력하세요",
+        "addTask": "추가"
+    },
+    "finishDialog": {
+        "title": "잘 하셨습니다! 오늘은 좋은 작업을 하셨네요. 간단한 코멘트를 남겨주세요",
+        "inputTitleSession": "여기에 코멘트를 남겨주세요"
+    },
+    "stats": {
+        "headers": {
+            "date": "날짜",
+            "totalCount": "총 시간",
+            "comments": "코멘트",
+            "segments": "세그먼트 수"
+        }
+    },
+    "sessionTask": {
+        "title": "오늘의 작업",
+        "addTask": "작업 추가"
+    },
+    "segments": {
+        "title": "세그먼트",
+        "totalTime": "수행 시간",
+        "breakTime": "휴식 시간",
+        "comments": "코멘트"
+    },
+    "info": {
+        "title": "프로젝트 정보",
+        "text": "작업 시간을 최적화하기 위해 작성된 작은 웹 애플리케이션입니다. 이 애플리케이션은 Vue 3 (Composition API)와 Vuetify 컴포넌트를 사용하여 개발되었습니다. 모든 세션 데이터는 로컬 스토리지에 저장됩니다. 세션 기록을 확인하고 각 세그먼트에 코멘트를 남길 수 있습니다. 앞으로 코드를 최적화하고 개발 시간을 더욱 향상시키는 새로운 기능을 추가할 계획입니다. 시간을 내어 이 애플리케이션을 알아봐 주셔서 감사합니다!"
+    }
+}

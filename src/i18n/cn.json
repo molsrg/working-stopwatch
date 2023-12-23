@@ -1,0 +1,47 @@
+{
+    "title": "是时候工作了",
+    "buttons": {
+        "startTimer": "开始工作",
+        "breakTime": "休息一下",
+        "resumeWork": "继续工作",
+        "stopTimer": "结束工作",
+        "cancel": "退出",
+        "addTask": "添加任务"
+    },
+    "startDialog": {
+        "title": "开始一个新的工作会话",
+        "inputTitleSession": "输入您今天想要完成的任务",
+        "task": "任务"
+    },
+    "addTask": {
+        "title": "添加任务",
+        "label": "在此处输入任务内容",
+        "addTask": "添加"
+    },
+    "finishDialog": {
+        "title": "干得好，您今天工作得很出色！请留下一条简短的评论",
+        "inputTitleSession": "在此处留下评论"
+    },
+    "stats": {
+        "headers": {
+            "date": "日期",
+            "totalCount": "总时间",
+            "comments": "评论",
+            "segments": "段数"
+        }
+    },
+    "sessionTask": {
+        "title": "今日任务",
+        "addTask": "添加任务"
+    },
+    "segments": {
+        "title": "段落",
+        "totalTime": "执行时间",
+        "breakTime": "休息时间",
+        "comments": "评论"
+    },
+    "info": {
+        "title": "关于项目",
+        "text": "这是一个小型的 Web 应用程序，旨在优化您的工作时间。该应用程序使用 Vue 3（Composition API）和 Vuetify 组件进行开发。所有会话数据都保存在本地存储中。您可以查看会话历史记录并对每个会话段进行评论。未来计划对代码进行优化，并添加新的功能，以进一步优化开发时间。感谢您抽出时间了解这个应用程序！"
+    }
+}

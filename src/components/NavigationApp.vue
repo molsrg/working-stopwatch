@@ -37,7 +37,7 @@
 import { useTheme } from "vuetify";
 import { useI18n } from "vue-i18n";
 
-const { t, locale } = useI18n({
+const { locale } = useI18n({
     useScope: "global",
 });
 
@@ -48,11 +48,13 @@ function toggleTheme() {
         ? "light"
         : "dark";
 }
-
 const language = {
     Русский: "ru",
     English: "en",
-    Беларускі: "be"
+    中文: "cn",
+    Deutsch: "de", 
+    Français: "fr", 
+    한국어: "kr"
 };
 
 const switchLang = (value) => {
