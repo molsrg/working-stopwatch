@@ -1,7 +1,7 @@
 
 <template>
     <v-app-bar class="nav">
-        <router-link to="/">
+        <router-link to="/working-stopwatch/">
             <h2 class="logo">Time To Work</h2>
         </router-link>
         <template v-slot:append>

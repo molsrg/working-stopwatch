@@ -4,7 +4,7 @@ import Stats from '../views/StatsApp.vue'
 import Info from '../views/InfoApp.vue'
 const routes = [
   {
-    path: '',
+    path: '/working-stopwatch/',
     component: Home
   },
 
