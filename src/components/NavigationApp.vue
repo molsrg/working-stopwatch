@@ -2,7 +2,7 @@
 <template>
     <v-app-bar class="nav">
         <router-link to="/">
-            <h2 class="logo">{{ $t("title") }}</h2>
+            <h2 class="logo">Time To Work</h2>
         </router-link>
         <template v-slot:append>
             <v-btn @click="toggleTheme" icon="mdi-theme-light-dark"></v-btn>

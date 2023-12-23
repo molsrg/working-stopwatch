@@ -5,7 +5,6 @@
                 store.getCurrentTime.minutes
             }}:{{ store.getCurrentTime.seconds }}
         </h1>
-
         <div class="btn__container">
             <v-btn
                 v-if="!store.isTimerRun"
@@ -17,7 +16,7 @@
             </v-btn>
 
             <v-btn
-                v-if="store.isTimerRun && !isOnBreak"
+                v-if="store.isTimerRun && !store.isOnBreak"
                 variant="tonal"
                 color="orange"
                 @click="startBreak()"
@@ -26,14 +25,14 @@
             </v-btn>
 
             <v-btn
-                v-if="store.isTimerRun && isOnBreak"
+                v-if="store.isTimerRun && store.isOnBreak"
                 variant="tonal"
                 color="green"
                 @click="resumeWork()"
             >
                 {{ $t("buttons.resumeWork") }}
             </v-btn>
-            <v-btn v-if="store.isTimerRun" @click="store.updateAddTaskOpenDialog">{{$t("sessionTask.addTask")}}</v-btn>
+            <v-btn v-if="store.isTimerRun" @click="store.updateAddTaskOpenDialog" variant="tonal">{{$t("sessionTask.addTask")}}</v-btn>
             <v-btn
                 v-if="store.isTimerRun"
                 variant="tonal"
@@ -49,33 +48,23 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 import { useCounterStore } from "@/store/index.js";
-
 import UpdateTimer from "@/Timer/UpdateTimer.js";
-import { useI18n } from "vue-i18n";
-const { t } = useI18n({
-    useScope: "global",
-});
+
 const store = useCounterStore();
 
-const isOnBreak = ref(false);
 
 
-
+// Доделать логику 
 const confirmSave = () => {
-    startBreak()
-    localStorage.setItem("TOTAL_TIME", JSON.stringify(store.getCurrentTime));
-    store.clearIntervalTimer();
+    localStorage.removeItem("BREAK_START");
+    localStorage.removeItem("TIMER_START");
+    localStorage.removeItem("SEGMENT_START");
+    localStorage.removeItem("TOTAL_TIME");
+    localStorage.removeItem("SESSION");
 };
+window.addEventListener("beforeunload", confirmSave);
 
-
-if (localStorage.getItem("SEGMENT_START")) {
-        store.updateTimerRun();
-        isOnBreak.value = true;
-        store.updateCurrentTime(JSON.parse(localStorage.getItem("TOTAL_TIME")));
-        window.addEventListener("beforeunload", confirmSave);
-}
 
 
 
@@ -88,7 +77,7 @@ const startSession = () => {
 const startBreak = () => {
     store.clearIntervalTimer();
     localStorage.setItem("BREAK_START", Date.now());
-    isOnBreak.value = true;
+    store.updateOnBreak()
 
     // Вычисляет длину сегмента
     const sessionStart = parseInt(localStorage.getItem("SEGMENT_START"), 10);
@@ -107,7 +96,7 @@ const startBreak = () => {
 
 // Отдых после перерыва
 const resumeWork = () => {
-    isOnBreak.value = false;
+    store.updateOnBreak()
 
     // Вычисляет длительность перерыва до следующего сегмента
     const breakStart = parseInt(localStorage.getItem("BREAK_START"), 10);
@@ -141,7 +130,9 @@ const resumeWork = () => {
 
 // Открывает диалоговое окно, очищает интервал
 const stopTimer = () => {
-    startBreak()
+    if(store.onBreak == false){
+        startBreak()
+    }
 
     store.updateOpenDialog();
     store.clearIntervalTimer();

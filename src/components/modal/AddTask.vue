@@ -33,10 +33,8 @@ const addTask = () => {
     }
     
     store.updateTaskSession(taskSession.value)
-    
     store.updateAddTaskOpenDialog()
     taskSession.value = "";
 };
-
 </script>
 

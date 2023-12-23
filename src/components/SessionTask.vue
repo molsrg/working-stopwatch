@@ -19,13 +19,3 @@
 const props = defineProps(["tasks"]);
 
 </script>
-
-
-<style>
-/* .v-list-item__content{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-} */
-
-</style>

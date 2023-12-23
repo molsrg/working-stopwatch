@@ -17,7 +17,8 @@ export const useCounterStore = defineStore("counter", {
         openDialog: false,
         openAddTaskDialog: false,
         timerRun: false, 
-        timerInterval: null
+        timerInterval: null, 
+        onBreak: false
     }),
     getters: {
 
@@ -27,7 +28,15 @@ export const useCounterStore = defineStore("counter", {
         getSessions(state) {
             return state.sessions
         }, 
+        getCurrentTime(state) {
+            return state.currentTime
+        },
+        getTimerInterval(state) {
+            return state.timerInterval
+        },
 
+
+        // Application
         isOpenDialog(state) {
             return state.openDialog
         },
@@ -39,12 +48,9 @@ export const useCounterStore = defineStore("counter", {
         },
         isTimerRun(state) {
             return state.timerRun
-        },
-        getCurrentTime(state) {
-            return state.currentTime
-        },
-        getTimerInterval(state) {
-            return state.timerInterval
+        }, 
+        isOnBreak(state){
+            return state.onBreak
         }
     },
 
@@ -53,6 +59,9 @@ export const useCounterStore = defineStore("counter", {
             this.session = data.value
             localStorage.setItem("SESSION", JSON.stringify(data.value));
         }, 
+        updateSession(data){
+            this.session = data
+        },
         addSessionSegment(data){
             this.session.segments.push(data)
             // Вычисление общей длительности всех сегментов
@@ -68,11 +77,6 @@ export const useCounterStore = defineStore("counter", {
         updateSessionComments(data) {
             this.session.comments = data
         }, 
-
-        updateSession(data){
-            this.session = data
-        },
-
         updateSessions(){
             this.session.totalTime = formatMilliseconds(this.session.totalTime)
             this.sessions.push(this.session)
@@ -82,39 +86,13 @@ export const useCounterStore = defineStore("counter", {
                 seconds: "00",
             },
             this.session = []
+            this.onBreak = false
             localStorage.setItem("SESSIONS", JSON.stringify(this.sessions));
             localStorage.removeItem("SESSION")
         },
-
         downoloadSessions(data){
             this.sessions = data
         },
-
-
-        updateOpenDialog() {
-            this.openDialog = !this.openDialog
-        }, 
-        
-        updateOpenStartDialog() {
-            this.openStartDialog = !this.openStartDialog
-        }, 
-
-        updateAddTaskOpenDialog(){
-            this.openAddTaskDialog = !this.openAddTaskDialog
-        },
-        updateTimerRun() {
-            this.timerRun = !this.timerRun
-        },
-        updateCurrentTime(data){
-            this.currentTime = data
-            localStorage.setItem("TOTAL_TIME", JSON.stringify(this.currentTime));
-        }, 
-        updateTimerInterval(data){
-            this.timerInterval = data
-        }, 
-        clearIntervalTimer(){
-            clearInterval(this.timerInterval)
-        }, 
         updateSegmentComments(data){
             // обработать утром 
             if(localStorage.getItem("SESSION") && localStorage.getItem("TOTAL_TIME")){
@@ -144,7 +122,36 @@ export const useCounterStore = defineStore("counter", {
         },
         updateTaskSession(data){
             this.session.tasks.push(data)
+        },
+
+
+        // Application
+        updateOpenDialog() {
+            this.openDialog = !this.openDialog
+        }, 
+        updateOpenStartDialog() {
+            this.openStartDialog = !this.openStartDialog
+        }, 
+        updateAddTaskOpenDialog(){
+            this.openAddTaskDialog = !this.openAddTaskDialog
+        },
+        updateTimerRun() {
+            this.timerRun = !this.timerRun
+        },
+        updateCurrentTime(data){
+            this.currentTime = data
+            localStorage.setItem("TOTAL_TIME", JSON.stringify(this.currentTime));
+        }, 
+        updateTimerInterval(data){
+            this.timerInterval = data
+        }, 
+        clearIntervalTimer(){
+            clearInterval(this.timerInterval)
+        }, 
+        updateOnBreak(){
+            this.onBreak = !this.onBreak
         }
+        
     },
 });
 

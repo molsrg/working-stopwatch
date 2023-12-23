@@ -20,6 +20,7 @@ const pinia = createPinia()
 
 const localStorageLang = localStorage.getItem('language')
 const messages = Object.assign(languages)
+
 const i18n = createI18n({
     legacy: false, 
     locale: localStorageLang || defaultLocale,

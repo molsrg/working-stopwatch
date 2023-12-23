@@ -9,6 +9,7 @@
                     clearable
                     required
                     hide-details
+                    @keydown.enter="stopTimer()"
                 ></v-text-field>
             </v-card-text>
 
@@ -26,11 +27,6 @@ import { ref } from "vue";
 
 const store = useCounterStore();
 const commentsSession = ref("");
-import { useI18n } from "vue-i18n";
-
-const { t } = useI18n({
-    useScope: "global",
-});
 
 
 const stopTimer = () => {
@@ -41,7 +37,6 @@ const stopTimer = () => {
     store.updateOpenDialog()
 
     localStorage.setItem("SESSIONS", JSON.stringify(store.getSessions));
-
     localStorage.removeItem("BREAK_START");
     localStorage.removeItem("TIMER_START");
     localStorage.removeItem("SEGMENT_START");

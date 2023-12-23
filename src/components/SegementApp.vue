@@ -74,4 +74,14 @@ function formatMilliseconds(milliseconds) {
 </script>
 
 <style>
+
+.v-list-item__content {
+    display: flex;
+    flex-direction: column;
+}
+
+.v-list-item__content > *:not(:last-child) {
+    margin-bottom: 5px;
+}
+
 </style>

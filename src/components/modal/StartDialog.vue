@@ -43,11 +43,6 @@ const store = useCounterStore();
 const taskSession = ref("");
 const tasksSession = ref([]);
 
-
-const clearSearch = () => {
-    console.log(1)
-}
-
 // Добавление задачи в список задач сессии
 const addTask = () => {
     if (taskSession.value.length == 0) {
