@@ -9,12 +9,12 @@ const routes = [
   },
 
   {
-    path: '/stats',
+    path: '/working-stopwatch/stats',
     component: Stats
   },
 
   {
-    path: '/info',
+    path: '/working-stopwatch/info',
     component: Info
   },
 

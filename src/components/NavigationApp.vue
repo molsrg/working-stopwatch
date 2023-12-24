@@ -21,11 +21,11 @@
                 </v-list>
             </v-menu>
 
-            <router-link to="/stats">
+            <router-link to="/working-stopwatch/stats">
                 <v-btn icon="mdi-chart-line"></v-btn>
             </router-link>
 
-            <router-link to="/info">
+            <router-link to="/working-stopwatch/info">
                 <v-btn icon="mdi-information"></v-btn>
             </router-link>
         </template>
